@@ -4,11 +4,27 @@ chrome.runtime.onInstalled.addListener(() => {
   setInterval(generateRecommendations, 60 * 60 * 1000);
 });
 
+chrome.runtime.onStartup.addListener(() => {
+  console.log('TabSage service worker started.');
+  generateRecommendations();
+});
+
+chrome.tabs.onCreated.addListener(() => {
+  console.log('A new tab was created, checking recommendations.');
+  generateRecommendations();
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log('Message received:', message);
+  sendResponse({ response: 'Message processed' });
+});
+
 function generateRecommendations() {
 
   chrome.history.search({ text: '', maxResults: 100} (historyItems) => {
     const userProfile = analyzeHistory(historyItems);
     const recommendations = fetchRecommendations(userProfile);
+    console.log('Generated Recommendations:', recommendations);
 
 function analyzeHistory(historyItems) {
   const profile = {
