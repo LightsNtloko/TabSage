@@ -1,6 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
   console.log('TabSage installed.');
   generateRecommendations();
+
   setInterval(generateRecommendations, 60 * 60 * 1000);
 });
 
@@ -20,20 +21,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function generateRecommendations() {
-
-  chrome.history.search({ text: '', maxResults: 100} (historyItems) => {
+  chrome.history.search({ text: '', maxResults: 100 }, (historyItems) => {
     const userProfile = analyzeHistory(historyItems);
     const recommendations = fetchRecommendations(userProfile);
     console.log('Generated Recommendations:', recommendations);
+  });
+}
 
 function analyzeHistory(historyItems) {
   const profile = {
-    catagories: {}
+    categories: {}
   };
 
   historyItems.forEach(item => {
     const url = new URL(item.url);
-    const domain = url.hostmate.replace(www.', '').split('.')[0];
+    const domain = url.hostname.replace('www.', '').split('.')[0];
 
     if (!profile.categories[domain]) {
       profile.categories[domain] = 0;
@@ -46,7 +48,7 @@ function analyzeHistory(historyItems) {
 
   if (sortedCategories.length > 0) {
     const topCategory = sortedCategories[0][0];
-    if (['edu', 'research', 'journal, music'].some(keyword => topCategory.includes(keyword))) {
+    if (['edu', 'research', 'journal', 'music'].some(keyword => topCategory.includes(keyword))) {
       userType = 'researcher';
     } else if (['business', 'finance', 'market'].some(keyword => topCategory.includes(keyword))) {
       userType = 'business';
@@ -59,10 +61,6 @@ function analyzeHistory(historyItems) {
 
 // Fetch Recommendations Based on User Profile
 function fetchRecommendations(profile) {
-  // Placeholder for recommendation logic
-  // This could involve querying external APIs or a predefined list
-  // For simplicity, we'll use a static list based on userType
-
   const staticRecommendations = {
     researcher: [
       { title: 'Google Scholar', url: 'https://scholar.google.com/' },
