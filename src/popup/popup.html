@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TabSage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>TabSage</h1>
+    
+    <!-- Recommendations Section -->
+    <section id="recommendations">
+      <h2>Recommended for You</h2>
+      <div id="recommendation-list"></div>
+    </section>
+
+    <!-- Library Section -->
+    <section id="library">
+      <h2>Your Library</h2>
+      <div id="library-list"></div>
+    </section>
+
+    <!-- Chatbot Section -->
+    <section id="chatbot">
+      <h2>Chat with Sage</h2>
+      <div id="chat-window">
+        <div id="chat-messages"></div>
+        <input type="text" id="chat-input" placeholder="Ask me anything..." />
+        <button id="send-chat">Send</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
