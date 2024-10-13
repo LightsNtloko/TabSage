@@ -4,7 +4,7 @@
   "description": "Organize and manage your open tabs effectively!",
   "version": "1.0",
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "pupup/popup.html"
 
   },
   "permissions": [
